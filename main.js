@@ -28,9 +28,9 @@ app.post('/push', (req, res) => {
   }
 
   cloneRepository(REPO_URL).then(() => {
-    console.log(new Date(), "Cloned repository.")
+    console.log(new Date(), 'Cloned repository.')
     execCommand(EXEC_CMD).then((stdout) => {
-      console.log(new Date(), `Command executed.\n${stdout}`)
+      console.log(new Date(), "Command executed.\n" + stdout)
     })
   })
 })
@@ -63,9 +63,9 @@ const isExpectedBranch = (reqBody) => {
 // repoUrlのリポジトリをクローンする
 const cloneRepository = (repoUrl) => {
   return new Promise((resolve, reject) => {
-    exec(`git clone ${repoUrl} repository`, (err, stdout, stderr) => {
+    exec(`rm -rf ./repository && git clone ${repoUrl} repository`, (err, stdout, stderr) => {
       if (err) {
-        reject(`Error: Faild clone repository.\n<stderr>\n${stderr}`)
+        reject('Error: Faild clone repository.\n<stderr>\n' + stderr)
       } else {
         resolve()
       }
@@ -78,7 +78,7 @@ const execCommand = (command) => {
   return new Promise((resolve, reject) => {
     exec(command, { cwd: './repository' }, (err, stdout, stderr) => {
       if (err) {
-        reject(`Error: Specified command returned non zero exit code.\n<stderr>\n${stderr}`)
+        reject('Error: Specified command returned non zero exit code.\n<stderr>\n' + stderr)
       } else {
         resolve(stdout)
       }
