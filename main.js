@@ -2,6 +2,7 @@ const exec = require('child_process').exec
 const express = require('express');
 const app = express();
 app.use(express.json())
+app.use(require('morgan')(':method :url :status :res[content-length] - :response-time ms'))
 
 const REPO_URL = process.env.REPO_URL
 const EXEC_CMD = process.env.EXEC_CMD
